@@ -39,51 +39,51 @@ const rootDb = {}
 
 export const resolvers = {
     Query: {
-        getActivity: ({ id }) => {
+        getActivity: (_, { id }) => {
             return new Activity(id, rootDb[id])
         },
-        getActivities: () => {
+        getActivities: (_) => {
             return new Activity(rootDb)
         },
-        getAlert: ({ id }) => {
+        getAlert: (_, { id }) => {
             return new Alert(id, rootDb[id])
         },
-        getAlerts: () => {
+        getAlerts: (_) => {
             return new Alert(rootDb)
         },
-        getItem: ({ id }) => {
+        getItem: (_, { id }) => {
             return new Item(id, rootDb[id])
         },
-        getItems: () => {
+        getItems: (_) => {
             return new Item(rootDb)
         },
-        getUser: ({ id }) => {
+        getUser: (_, { id }) => {
             return new User(id, rootDb[id])
         },
-        getUsers: () => {
+        getUsers: (_) => {
             return new User(rootDb)
         },
     },
     Mutation: {
-        createActivity: ({ input }) => {
+        createActivity: (_, { input }) => {
             const id = require("crypto").randomBytes(10).toString("hex");
             rootDb[id] = input;
 
             return new Activity(id, input);
         },
-        createAlert: ({ input }) => {
+        createAlert: (_, { input }) => {
             const id = require("crypto").randomBytes(10).toString("hex");
             rootDb[id] = input;
 
             return new Alert(id, input);
         },
-        createItem: ({ input }) => {
+        createItem: (_, { input }) => {
             const id = require("crypto").randomBytes(10).toString("hex");
             rootDb[id] = input;
 
             return new Item(id, input);
         },
-        createUser: ({ input }) => {
+        createUser: (_, { input }) => {
             const id = require("crypto").randomBytes(10).toString("hex");
             rootDb[id] = input;
 
