@@ -1,0 +1,27 @@
+{
+  "name": "inventory-graphql",
+  "version": "1.0.0",
+  "description": "Graph QL server for inventory views",
+  "main": "schema.js",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.11.0",
+    "graph-tools": "^0.1.2",
+    "graphql": "^15.4.0",
+    "mongoose": "^5.10.15",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon ./index.js --exec babel-node -e js"
+  },
+  "keywords": [
+    "graphql",
+    "node"
+  ],
+  "author": "Terry",
+  "license": "ISC"
+}
