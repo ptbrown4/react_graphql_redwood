@@ -1,82 +1,101 @@
-class Activity {
-    constructor(id, { name, date, description }) {
-        this.id = id
-        this.name = name
-        this.date = date
-        this.description = description
-    }
-}
-
-class Alert {
-    constructor(id, { name, date, description }) {
-        this.id = id
-        this.name = name
-        this.date = date
-        this.description = description
-    }
-}
-
-class Item {
-    constructor(id, { name, date, amount, location }) {
-        this.id = id
-        this.name = name
-        this.date = date
-        this.amount = amount
-        this.location = location
-    }
-}
-
-class User {
-    constructor(id, { name, date, description }) {
-        this.id = id
-        this.name = name
-        this.date = date
-        this.description = description
-    }
-}
-
-const rootDb = {}
+import { Activities, Alerts, Items, Users } from "./dbConnectors";
 
 export const resolvers = {
     Query: {
         getActivity: (_, { id }) => {
-            return new Activity(id, rootDb[id])
+            return new Promise((resolve, reject) => {
+                Activities.findById(id, (err, activity) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(activity)
+                    }
+                })
+            })
         },
         getActivities: (_) => {
-            return new Activity(rootDb)
+            return Activities.find()
         },
         getAlert: (_, { id }) => {
-            return new Alert(id, rootDb[id])
+            return new Promise((resolve, reject) => {
+                Alerts.findById(id, (err, alert) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(alert)
+                    }
+                })
+            })
         },
         getAlerts: (_) => {
-            return new Alert(rootDb)
+            return Alerts.find()
         },
         getItem: (_, { id }) => {
-            return new Item(id, rootDb[id])
+            return new Promise((resolve, reject) => {
+                Items.findById(id, (err, item) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(item)
+                    }
+                })
+            })
         },
         getItems: (_) => {
-            return new Item(rootDb)
+            return Items.find()
         },
         getUser: (_, { id }) => {
-            return new User(id, rootDb[id])
+            return new Promise((resolve, reject) => {
+                Users.findById(id, (err, user) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(user)
+                    }
+                })
+            })
         },
         getUsers: (_) => {
-            return new User(rootDb)
+            return Users.find()
         },
     },
     Mutation: {
         createActivity: (_, { input }) => {
-            const id = require("crypto").randomBytes(10).toString("hex");
-            rootDb[id] = input;
+            const newActivity = new Activities({
+                name = input.name,
+                date = input.date,
+                description = input.description
+            })
 
-            return new Activity(id, input);
-        },
+            newActivity.id = newActivity._id
+
+            return new Promise((resolve, reject) => {
+                newActivity.save((err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(newActivity)
+                    }
+                })
+            })},
         createAlert: (_, { input }) => {
-            const id = require("crypto").randomBytes(10).toString("hex");
-            rootDb[id] = input;
-
-            return new Alert(id, input);
-        },
+            const newAlert = new Alerts({
+                name = input.name,
+                date = input.date,
+                description = input.description
+            })
+    
+            newAlert.id = newAlert._id
+    
+            return new Promise((resolve, reject) => {
+                newActivity.save((err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(newActivity)
+                    }
+                })
+            })},
         createItem: (_, { input }) => {
             const id = require("crypto").randomBytes(10).toString("hex");
             rootDb[id] = input;
@@ -89,5 +108,31 @@ export const resolvers = {
 
             return new User(id, input);
         },
+        updateActivity: (_, { input }) => {
+            return new Promise((resolve, reject) => {
+                Activities.findOneAndUpdate(
+                    { _id: input.id },
+                    input,
+                    (err, activity) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(activity)
+                        }
+                    }
+                )
+            })
+        },
+        deleteActivity: (_, { id }) => {
+            return new Promise((resolve, reject) => {
+                Activities.deleteOne({ _id: id }, (err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve("Successfully deleted activity")
+                    }
+                })
+            })
+        }
     }
 }
