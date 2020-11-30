@@ -10,11 +10,6 @@ const typeDefs = `
         description: String
     }
 
-    type ActivityOverview {
-        name: String
-        date: String
-    }
-
     type Alert {
         id: ID
         name: String

@@ -88,26 +88,51 @@ export const resolvers = {
             newAlert.id = newAlert._id
     
             return new Promise((resolve, reject) => {
-                newActivity.save((err) => {
+                newAlert.save((err) => {
                     if (err) {
                         reject(err)
                     } else {
-                        resolve(newActivity)
+                        resolve(newAlert)
                     }
                 })
             })},
         createItem: (_, { input }) => {
-            const id = require("crypto").randomBytes(10).toString("hex");
-            rootDb[id] = input;
+            const newItem = new Items({
+                name = input.name,
+                date = input.date,
+                amount = input.amount,
+                location = input.location
+            })
 
-            return new Item(id, input);
-        },
+            newItem.id = newItem._id
+
+            return new Promise((resolve, reject) => {
+                newItem.save((err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(newItem)
+                    }
+                })
+            })},
         createUser: (_, { input }) => {
-            const id = require("crypto").randomBytes(10).toString("hex");
-            rootDb[id] = input;
+            const newUser = new Users({
+                name = input.name,
+                date = input.date,
+                description = input.description
+            })
 
-            return new User(id, input);
-        },
+            newUser.id = newUser._id
+
+            return new Promise((resolve, reject) => {
+                newUser.save((err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(newUser)
+                    }
+                })
+            })},
         updateActivity: (_, { input }) => {
             return new Promise((resolve, reject) => {
                 Activities.findOneAndUpdate(
@@ -123,6 +148,51 @@ export const resolvers = {
                 )
             })
         },
+        updateAlert: (_, { input }) => {
+            return new Promise((resolve, reject) => {
+                Alerts.findOneAndUpdate(
+                    { _id: input.id },
+                    input,
+                    (err, alert) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(alert)
+                        }
+                    }
+                )
+            })
+        },
+        updateItem: (_, { input }) => {
+            return new Promise((resolve, reject) => {
+                Items.findOneAndUpdate(
+                    { _id: input.id },
+                    input,
+                    (err, item) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(item)
+                        }
+                    }
+                )
+            })
+        },
+        updateUser: (_, { input }) => {
+            return new Promise((resolve, reject) => {
+                Users.findOneAndUpdate(
+                    { _id: input.id },
+                    input,
+                    (err, user) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(user)
+                        }
+                    }
+                )
+            })
+        },
         deleteActivity: (_, { id }) => {
             return new Promise((resolve, reject) => {
                 Activities.deleteOne({ _id: id }, (err) => {
@@ -133,6 +203,39 @@ export const resolvers = {
                     }
                 })
             })
-        }
+        },
+        deleteAlert: (_, { id }) => {
+            return new Promise((resolve, reject) => {
+                Alerts.deleteOne({ _id: id }, (err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve("Successfully deleted alert")
+                    }
+                })
+            })
+        },
+        deleteItem: (_, { id }) => {
+            return new Promise((resolve, reject) => {
+                Items.deleteOne({ _id: id }, (err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve("Successfully deleted item")
+                    }
+                })
+            })
+        },
+        deleteUser: (_, { id }) => {
+            return new Promise((resolve, reject) => {
+                Users.deleteOne({ _id: id }, (err) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve("Successfully deleted user")
+                    }
+                })
+            })
+        },
     }
 }

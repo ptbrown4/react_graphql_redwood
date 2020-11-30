@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 mongoose.Promise = global.Promise
-mongoose.connect("mongodb://localhost27017/inventory", {
+mongoose.connect("mongodb://localhost:27017/inventory", {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
