@@ -1,7 +1,7 @@
 datasource DS {
   // optionally set multiple providers
   // example: provider = ["sqlite", "postgresql"]
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -12,9 +12,31 @@ generator client {
 
 // Define your own datamodels here and run `yarn redwood db save` to create
 // migrations for them.
-// TODO: Please remove the following example:
-model UserExample {
+
+model Activities {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  name  String
+  date  String
+  description String
+}
+
+model Alerts {
+  id    Int     @id @default(autoincrement())
+  name  String
+  date  String
+  description String
+}
+
+model Items {
+  id    Int     @id @default(autoincrement())
+  name  String
+  date  String
+  amount  Int
+  location String
+}
+model Users {
+  id    Int     @id @default(autoincrement())
+  name  String
+  date  String
+  description String
 }
