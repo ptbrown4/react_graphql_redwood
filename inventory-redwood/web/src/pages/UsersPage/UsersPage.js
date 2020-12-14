@@ -1,28 +1,13 @@
 import React, { useState } from "react"
-import styled from "styled-components"
 
-import RowContainer from "src/components/RowContainer"
 import MainLayout from "src/layouts/MainLayout"
-
+import UserCell from 'src/components/UserCell/UserCell'
 
 function Users() {
   const [name, setName] = useState("")
   const [date, setDate] = useState("")
   const [description, setDescription] = useState("")
   const [showCreateForm, setShowCreateForm] = useState(false)
-
-  const data = [
-    {
-      name: "Oranges",
-      date: "11/29/2020",
-      description: "KITCHEN"
-    },
-    {
-      name: "Oranges",
-      date: "11/30/2020",
-      description: "BATHROOM"
-    }
-  ]
 
   return (
     <MainLayout>
@@ -58,17 +43,9 @@ function Users() {
         <button type="submit">Save</button>
       </form>
     )}
-      {data.map((user) => (
-        <SmallPadding key={user.name}>
-          <RowContainer rowData={user} type="user"/>
-        </SmallPadding>
-      ))}
+    <UserCell />
     </MainLayout>
   )
 }
-
-const SmallPadding = styled.div`
-  padding-bottom: 24px;
-`
 
 export default Users

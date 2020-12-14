@@ -2,7 +2,7 @@ datasource DS {
   // optionally set multiple providers
   // example: provider = ["sqlite", "postgresql"]
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -40,10 +40,4 @@ model Users {
   name  String
   date  String
   description String
-}
-
-// example
-model Store {
-  id    Int     @id @default(autoincrement())
-  name  String
 }
